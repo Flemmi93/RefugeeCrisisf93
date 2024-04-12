@@ -5,5 +5,6 @@ tags={
 	"Utilities"
 }
 name="Refugee Crisis"
-supported_version="3.11.3"
+picture="thumbnail.png"
+supported_version="3.11.*"
 remote_file_id="3219488472"
