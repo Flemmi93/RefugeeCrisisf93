@@ -4,7 +4,7 @@ namespace = refugees_redo
 #Changed for the Mod
 # Pop escapes crisis, fleeing to another empire
 planet_event = {
-	id = refugees_redo.5
+	id = refugees_redo.5 #based on refugees.5
 	hide_window = yes
 	is_triggered_only = yes
 
@@ -14,6 +14,7 @@ planet_event = {
 
 	trigger = {
 		has_global_flag = galactic_crisis_happened
+		exists = owner
 		owner = { is_country_type = default }
 		is_controlled_by = owner
 		NOT = { has_planet_flag = refugees_redo_escaping_crisis }
@@ -29,7 +30,7 @@ planet_event = {
 
 # Pop escapes crisis, fleeing to another empire
 planet_event = {
-	id = refugees_redo.6
+	id = refugees_redo.6 #based on refugees.6
 	hide_window = yes
 	is_triggered_only = yes
 
@@ -45,7 +46,7 @@ planet_event = {
 		is_under_crisis_bombardment = yes
 	}
 
-	immediate = {
+	immediate = { #magic happens here, exports 15% of the planets population instead of a single pop every 45-90 days
 		export_trigger_value_to_variable = {
 			trigger = num_pops
 			variable = refugee_pops
@@ -63,3 +64,64 @@ planet_event = {
 		remove_planet_flag = refugees_redo_escaping_crisis
 	} 
 }
+
+# #entirly custom mechanics
+
+# # Fired whenever a new owner is set for a planet, and the planet was aggressively conquered
+# # NOTE: fired in ADDITION to on_planet_transfer
+# # This = Planet scope
+# # From = Country scope (new owner)
+# # FromFrom = Former Owner
+# planet_event = {
+# 	id = refugees_redo.3
+# 	hide_window = yes
+# 	is_triggered_only = yes
+
+# 	pre_triggers = {
+# 		has_owner = yes
+# 	}
+
+# 	trigger = {
+# 		owner = { is_country_type = default }
+# 		is_controlled_by = owner
+# 	}
+
+# 	immediate = {
+# 		set_planet_flag = refugees_redo_escaping_war
+# 		planet_event = { id = refugees_redo.4 }
+# 	}
+# }
+
+# planet_event = {
+# 	id = refugees_redo.4
+# 	hide_window = yes
+# 	is_triggered_only = yes
+
+# 	pre_triggers = {
+# 		has_owner = yes
+# 	}
+
+# 	trigger = {
+# 		owner = { is_country_type = default }
+# 		is_controlled_by = owner
+# 		has_planet_flag = refugees_redo_escaping_war
+# 	}
+
+# 	immediate = {
+# 		export_trigger_value_to_variable = {
+# 			trigger = num_pops
+# 			variable = refugee_pops
+# 		}
+# 		multiply_variable = { which = refugee_pops value = 0.15 }
+# 		round_variable = refugee_pops
+# 		while = {
+# 			count = refugee_pops
+# 			random_owned_pop = {
+# 				limit = { is_valid_refugee_pop = yes }
+# 				save_event_target_as = refugee_pop #Must be saved for refugee_pop_effect to work
+# 				refugee_pop_effect = yes
+# 			}
+# 		}
+# 		remove_planet_flag = refugees_redo_escaping_war
+# 	} 
+# }

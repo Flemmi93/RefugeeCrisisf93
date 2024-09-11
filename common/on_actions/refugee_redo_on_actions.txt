@@ -6,3 +6,15 @@ on_planet_bombarded = {
 		refugees_redo.5
 	}
 }
+
+
+# Fired whenever a new owner is set for a planet, and the planet was aggressively conquered
+# NOTE: fired in ADDITION to on_planet_transfer
+# This = Planet scope
+# From = Country scope (new owner)
+# FromFrom = Former Owner
+on_planet_conquer = {
+	events = {
+		# refugees_redo.3
+	}
+}
