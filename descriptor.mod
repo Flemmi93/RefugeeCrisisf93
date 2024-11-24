@@ -6,5 +6,5 @@ tags={
 }
 name="Refugee Crisis"
 picture="thumbnail.png"
-supported_version="v3.13.*"
+supported_version="v3.14.*"
 remote_file_id="3219488472"
