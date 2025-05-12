@@ -1,10 +1,10 @@
-namespace = refugees_redo
+namespace = refugees_redo_old
 
 
 #Changed for the Mod
 # Pop escapes crisis, fleeing to another empire
 planet_event = {
-	id = refugees_redo.5 #based on refugees.5
+	id = refugees_redo_old.5 #based on refugees.5
 	hide_window = yes
 	is_triggered_only = yes
 
@@ -23,14 +23,14 @@ planet_event = {
 
 	immediate = {
 		set_planet_flag = refugees_redo_escaping_crisis
-		planet_event = { id = refugees_redo.6 days = 10 random = 10 } #the lower the more frequent
+		planet_event = { id = refugees_redo_old.6 days = 10 random = 10 } #the lower the more frequent
 	}
 }
 
 
 # Pop escapes crisis, fleeing to another empire
 planet_event = {
-	id = refugees_redo.6 #based on refugees.6
+	id = refugees_redo_old.6 #based on refugees.6
 	hide_window = yes
 	is_triggered_only = yes
 

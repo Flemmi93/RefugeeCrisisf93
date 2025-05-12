@@ -1,0 +1,73 @@
+namespace = refugees_redo
+
+
+#Changed for the Mod
+# Pop escapes crisis, fleeing to another empire
+planet_event = {
+	id = refugees_redo.5 #based on refugees.5
+	hide_window = yes
+	is_triggered_only = yes
+
+	pre_triggers = {
+		has_owner = yes
+	}
+
+	trigger = {
+		has_global_flag = galactic_crisis_happened
+		exists = owner
+		owner = { is_country_type = default }
+		is_controlled_by = owner
+		NOT = { has_planet_flag = refugees_redo_escaping_crisis }
+		is_under_crisis_bombardment = yes
+	}
+
+	immediate = {
+		set_planet_flag = refugees_redo_escaping_crisis
+		planet_event = { id = refugees_redo.6 days = 10 random = 10 } #the lower the more frequent
+	}
+}
+
+
+# Pop escapes crisis, fleeing to another empire
+planet_event = {
+	id = refugees_redo.6 #based on refugees.6
+	hide_window = yes
+	is_triggered_only = yes
+
+	pre_triggers = {
+		has_owner = yes
+	}
+
+	trigger = {
+		has_global_flag = galactic_crisis_happened
+		owner = { is_country_type = default }
+		is_controlled_by = owner
+		has_planet_flag = refugees_redo_escaping_crisis
+		is_under_crisis_bombardment = yes
+	}
+
+	immediate = { #magic happens here, exports 15% of the planets population instead of a single pop every 45-90 days
+		set_variable = { which = refugee_pops value = 0 }
+		set_variable = { which = refugee_pops2 value = 0 }
+		export_trigger_value_to_variable = {
+			trigger = num_pops_assigned_to_job
+			variable = refugee_pops
+		}
+		export_trigger_value_to_variable = {
+			trigger = num_unemployed
+			variable = refugee_pops2
+		}
+		change_variable = { which = refugee_pops value = refugee_pops2 }
+		multiply_variable = { which = refugee_pops value = 0.15 }
+		round_variable = refugee_pops
+		while = {
+			count = refugee_pops
+			random_owned_pop_group = {
+				limit = { is_valid_refugee_pop = yes }
+				save_event_target_as = refugee_pop #Must be saved for refugee_pop_effect to work
+				refugee_pop_effect = yes
+			}
+		}
+		remove_planet_flag = refugees_redo_escaping_crisis
+	} 
+}
